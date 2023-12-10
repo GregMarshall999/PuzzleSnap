@@ -16,12 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.VisUI;
+import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 
 public class PuzzleSnap extends ApplicationAdapter {
-
 	private Skin glassy;
 	private SpriteBatch batch;
 	private Stage stage;
@@ -79,9 +79,9 @@ public class PuzzleSnap extends ApplicationAdapter {
 				VisWindow fileChooserWindow = new VisWindow("File Explorer");
 				fileChooserWindow.setPosition(Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() / 4f);
 				fileChooserWindow.setSize(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
-				stage.addActor(fileChooserWindow);
 
 				FileChooser fileChooser = new FileChooser("Select an image", FileChooser.Mode.OPEN);
+				fileChooser.setResizable(false);
 				fileChooser.setListener(new FileChooserAdapter() {
 					@Override
 					public void selected(Array<FileHandle> files) {
@@ -97,8 +97,17 @@ public class PuzzleSnap extends ApplicationAdapter {
 					}
 				});
 
-				fileChooserWindow.add(fileChooser.fadeIn()).pad(10).expand().fill();
+				VisTable container = new VisTable();
+				container.add(fileChooser.fadeIn()).pad(4).expand().fill();
+
+				fileChooserWindow.add(container).expand().fill();
 				fileChooserWindow.pack();
+
+				fileChooserWindow.setResizable(true);
+				fileChooserWindow.setResizeBorder(8);
+				fileChooserWindow.pack();
+
+				stage.addActor(fileChooserWindow);
 			}
 			case Android -> {
 				//TODO handle android
