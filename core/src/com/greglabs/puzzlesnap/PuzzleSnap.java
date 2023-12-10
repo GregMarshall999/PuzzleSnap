@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.VisUI;
+import com.kotcrab.vis.ui.widget.VisWindow;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 
@@ -75,6 +76,11 @@ public class PuzzleSnap extends ApplicationAdapter {
 	private void openFileExplorer() {
 		switch (Gdx.app.getType()) {
 			case Desktop -> {
+				VisWindow fileChooserWindow = new VisWindow("File Explorer");
+				fileChooserWindow.setPosition(Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() / 4f);
+				fileChooserWindow.setSize(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+				stage.addActor(fileChooserWindow);
+
 				FileChooser fileChooser = new FileChooser("Select an image", FileChooser.Mode.OPEN);
 				fileChooser.setListener(new FileChooserAdapter() {
 					@Override
@@ -82,9 +88,12 @@ public class PuzzleSnap extends ApplicationAdapter {
 						FileHandle selectedFile = files.first();
 						Texture texture = new Texture(selectedFile);
 						backgroundImage.setRegion(new TextureRegion(texture));
+						fileChooserWindow.remove();
 					}
 				});
-				stage.addActor(fileChooser.fadeIn());
+
+				fileChooserWindow.add(fileChooser.fadeIn()).pad(10).expand().fill();
+				fileChooserWindow.pack();
 			}
 			case Android -> {
 				//TODO handle android
