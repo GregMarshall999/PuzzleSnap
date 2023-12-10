@@ -90,6 +90,11 @@ public class PuzzleSnap extends ApplicationAdapter {
 						backgroundImage.setRegion(new TextureRegion(texture));
 						fileChooserWindow.remove();
 					}
+
+					@Override
+					public void canceled() {
+						fileChooserWindow.remove();
+					}
 				});
 
 				fileChooserWindow.add(fileChooser.fadeIn()).pad(10).expand().fill();
