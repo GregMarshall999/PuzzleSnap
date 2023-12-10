@@ -66,6 +66,15 @@ public class PuzzleSnap extends ApplicationAdapter {
 	}
 
 	@Override
+	public void resize(int width, int height) {
+		stage.getViewport().update(width, height, true);
+
+		if(backgroundImage.getTexture() != null) {
+			backgroundImage.setRegion(0, 0, width, height);
+		}
+	}
+
+	@Override
 	public void dispose() {
 		batch.dispose();
 		stage.dispose();
